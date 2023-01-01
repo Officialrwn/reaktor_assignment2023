@@ -1,4 +1,4 @@
-import './App.css';
+import './assets/App.css';
 import React,	{ useState, useEffect } from 'react';
 import socketIO from 'socket.io-client';
 

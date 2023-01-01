@@ -28,7 +28,7 @@ setInterval(async () => {
 	console.log("update: ", updateIntervalMs);
 	const data = await db.getData();
 	socketIO.emit(messageResponse, data)
-}, updateIntervalMs * 1000)
+}, 60 * 1000)
 
 setInterval(() => {
 	db.cleanUp();

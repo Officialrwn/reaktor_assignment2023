@@ -6,7 +6,7 @@ const cors = require('cors');
 const fn = require('./functions.js');
 
 const messageResponse = "messageResponse";
-let updateIntervalMs = 2;
+let updateIntervalMs;
 
 app.use(cors());
 
@@ -17,21 +17,22 @@ const socketIO = require('socket.io')(http, {
 });
 
 socketIO.on('connection', async (socket) => {
-	fn.getDrones(updateIntervalMs);
 	console.log("Connection established");
-	const data = await db.getData();
-	socketIO.emit(messageResponse, data);
+	fetchData();
 });
 
-setInterval(async () => {
-	fn.getDrones(updateIntervalMs);
-	console.log("update: ", updateIntervalMs);
+const fetchData = async () => {
+	updateIntervalMs = fn.getDrones();
 	const data = await db.getData();
-	socketIO.emit(messageResponse, data)
-}, 60 * 1000)
+	socketIO.emit(messageResponse, data);
+}
 
-setInterval(() => {
-	db.cleanUp();
+setInterval(async () => {
+	fetchData();
+}, updateIntervalMs ?? 2 * 1000)
+
+setInterval(async () => {
+	await db.cleanUp();
 }, 60 * 1000)
 
 const PORT = process.env.PORT || 3001

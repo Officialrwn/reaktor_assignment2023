@@ -1,18 +1,18 @@
 const mysql = require('mysql2/promise');
 const config = require('../config.db');
-
+let num = 0;
 const create = async (pilotInfo) => {
 	try {
 		const db = await mysql.createConnection(config.db);
 		db.connect();
-		const pilot = `(${pilotInfo.join(',')})`;
+		const pilot = pilotInfo ? `(${pilotInfo.join(',')})` : `('unknownid_${num++}', 'n/a', 'n/a', 'n/a', 'n/a', 0)`;
+		console.log("pilot:", pilot);
 		const sql = `insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ${pilot} \
-		on duplicate key update distance = if(distance < values(distance), distance, values(distance)), amount=amount+1`;
+		on duplicate key update distance = if(distance < values(distance), distance, values(distance))`;
 		db.query(sql);
 		db.end();
-		console.log("inserted/updated pilot: ", pilot);
 	} catch (err) {
-		console.error("Failed inserting to db", err);
+		console.error("Failed inserting to db\n", err);
 	}
 }
 
@@ -24,7 +24,7 @@ const cleanUp = async () => {
 		db.query(sql);
 		db.end();
 	} catch (err) {
-		console.error("Failed to cleanup db", err);
+		console.error("Failed to cleanup db\n", err);
 	}
 }
 
@@ -37,7 +37,7 @@ const getData = async () => {
 		db.end();
 		return (res[0]);
 	} catch (err) {
-		console.error("Failed to cleanup db", err);
+		console.error("Failed to cleanup db\n", err);
 	}
 }
 

@@ -6,10 +6,11 @@ const Pilot = ({pilot}) => {
 		timeZoneName: "short"
 	});
 	console.log(date);
+	const dist = pilot.distance / 1000;
 	return (
 		<div className="pilot">
 			<p>
-				{pilot.firstname}	{pilot.lastname} [violations: {pilot.amount}] 
+				{pilot.firstname}	{pilot.lastname} [closest distance: {dist}m] 
 			</p>
 		</div>
 	)

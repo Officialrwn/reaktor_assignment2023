@@ -11,7 +11,7 @@ const PilotList = ({socket}) => {
 	}, [socket]);
 	return (
 		<div>
-			{ pilots && pilots.map(pilot => {
+			{ pilots?.map(pilot => {
 				return <Pilot key={pilot.pilotid} pilot={pilot}/>
 			})}
 		</div>

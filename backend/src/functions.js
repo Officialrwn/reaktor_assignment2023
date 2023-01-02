@@ -4,7 +4,6 @@ const db = require('../services/db.js');
 
 const forbiddenRange = 100000;
 const originPos = 250000;
-let updateIntervalMs = 2000;
 
 const getDistanceFromCenter = (x, y) => {
 	return Math.sqrt(Math.pow((x - originPos), 2) + Math.pow((y - originPos), 2));
@@ -12,7 +11,7 @@ const getDistanceFromCenter = (x, y) => {
 
 const filterDrones = (allDrones) => {
 	return allDrones.filter(drone => {
-		const dist = getDistanceFromCenter(drone.positionX, drone.positionY);
+		const dist = getDistanceFromCenter(drone.posX, drone.posY);
 		if (dist <= forbiddenRange) {
 			drone.distance = dist;
 			return drone;
@@ -20,51 +19,52 @@ const filterDrones = (allDrones) => {
 	});
 }
 
-const	errorHandler = (error) => {
-	if (error.response) {
-		console.error(error.response.data);
-		console.error(error.response.status);
-		console.error(error.response.headers);
-	} else if (error.request) {
-		console.error(error.request);
-	} else {
-		console.error("Error", error.message);
-	}
-	console.error(error.config);
-}
-
-const getPilotInfo = async (distance, serialNumber) => {
-	return axios.get(`https://assignments.reaktor.com/birdnest/pilots/${serialNumber}`)
-		.then(res => { return { ...res.data, distance: distance }})
-		.catch(error => errorHandler(error));
-}
-
-const parseXml = (res) => {
-	parser.parseString(res.data, async (err, results) => {
-		if (err)
-			throw err;
-		const allDrones = results.report.capture[0].drone;
-		updateIntervalMs = results.report.deviceInformation[0].updateIntervalMs[0];
+const updatePilotInfo = async (allDrones) => {
+	try {
 		const drones = filterDrones(allDrones);
-		const pilots = await Promise.all(drones.map(drone => getPilotInfo(drone.distance, drone.serialNumber[0])));
+		const pilots = await Promise.all(drones.map(async (drone) => {
+			const dist = getDistanceFromCenter(drone.posX, drone.posY);
+			const pilot = await axios.get(`https://assignments.reaktor.com/birdnest/pilots/${drone.serialNumber}`);
+			return { ...pilot.data, distance: dist };
+		}));
 		pilots.map(pilot => {
 			if (pilot) {
 				delete pilot.createdDt;
 				const pilotInfo = Object.values(pilot).map(prop => typeof prop === "string" ? `\'${prop.replace(/\'/g, '')}\'` : prop);
 				db.create(pilotInfo);
 			}
+		});
+	} catch (err) {
+		console.error("Update pilot info failed\n", err);
+	}
+}
+
+const parseXml = (res) => {
+	return new Promise((resolve, reject) => {
+		parser.parseString(res, (err, result) => {
+			if (err) {
+				reject(err);
+			} else {
+				const drones = result.report.capture[0].drone.map(drone => {
+					const obj = {
+						serialNumber: drone.serialNumber[0],
+						posY: parseFloat(drone.positionY[0]),
+						posX: parseFloat(drone.positionX[0])
+					}
+					return obj;
+				})
+				const data = {
+					deviceInformation: result.report.deviceInformation[0],
+					drones: drones
+				}
+				resolve(data);
+			}
 		})
 	})
 }
 
-const getDrones = () => {
-	axios.get("https://assignments.reaktor.com/birdnest/drones")
-		.then((res) => parseXml(res))
-		.catch(error => errorHandler(error));
-	return updateIntervalMs;
-}
-
 module.exports = {
-	getDrones
+	parseXml,
+	updatePilotInfo
 };
 

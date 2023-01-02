@@ -3,6 +3,7 @@ const app = express();
 const db = require('../services/db.js');
 const http = require('http').Server(app);
 const cors = require('cors');
+const axios = require('axios');
 const fn = require('./functions.js');
 
 const messageResponse = "messageResponse";
@@ -17,18 +18,27 @@ const socketIO = require('socket.io')(http, {
 });
 
 socketIO.on('connection', async (socket) => {
-	console.log("Connection established");
-	fetchData();
+	console.log("New client connected");
+	const data = await fetchData();
+	socketIO.emit(messageResponse, data);
 });
 
 const fetchData = async () => {
-	updateIntervalMs = fn.getDrones();
-	const data = await db.getData();
-	socketIO.emit(messageResponse, data);
+	const res = await axios.get("https://assignments.reaktor.com/birdnest/drones");
+	const parsedData = await fn.parseXml(res.data);
+	fn.updatePilotInfo(parsedData.drones);
+	const data = {
+		pilots: await db.getData(),
+		deviceInfo: parsedData.deviceInformation
+	};
+	return data;
 }
 
 setInterval(async () => {
-	fetchData();
+	const data = await fetchData();
+	updateIntervalMs = data.deviceInfo.updateIntervalMs[0];
+	console.log(data);
+	socketIO.emit(messageResponse, data);
 }, updateIntervalMs ?? 2 * 1000)
 
 setInterval(async () => {

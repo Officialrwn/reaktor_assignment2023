@@ -2,6 +2,7 @@ const axios = require('axios');
 const parser = require('xml2js');
 const db = require('../services/db.js');
 
+const pilotApi = "https://assignments.reaktor.com/birdnest/pilots/";
 const forbiddenRange = 100000;
 const originPos = 250000;
 
@@ -24,14 +25,17 @@ const updatePilotInfo = async (allDrones) => {
 		const drones = filterDrones(allDrones);
 		const pilots = await Promise.all(drones.map(async (drone) => {
 			const dist = getDistanceFromCenter(drone.posX, drone.posY);
-			const pilot = await axios.get(`https://assignments.reaktor.com/birdnest/pilots/${drone.serialNumber}`);
-			return { ...pilot.data, distance: dist };
+			const res = await axios.get(pilotApi+drone.serialNumber);
+			if (res.status === 200) {
+				return { ...res.data, distance: dist };
+			} else {
+				console.log(`No pilot info, status code: ${res.status}\n`);
+			}
 		}));
 		pilots.map(pilot => {
 			if (pilot) {
 				delete pilot.createdDt;
-				const pilotInfo = Object.values(pilot).map(prop => typeof prop === "string" ? `\'${prop.replace(/\'/g, '')}\'` : prop);
-				db.create(pilotInfo);
+				db.create(Object.values(pilot));
 			}
 		});
 	} catch (err) {

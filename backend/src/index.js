@@ -7,6 +7,7 @@ const axios = require('axios');
 const fn = require('./functions.js');
 
 const messageResponse = "messageResponse";
+const dronesApi = "https://assignments.reaktor.com/birdnest/drones";
 let updateIntervalMs;
 
 app.use(cors());
@@ -24,7 +25,7 @@ socketIO.on('connection', async (socket) => {
 });
 
 const fetchData = async () => {
-	const res = await axios.get("https://assignments.reaktor.com/birdnest/drones");
+	const res = await axios.get(dronesApi);
 	const parsedData = await fn.parseXml(res.data);
 	fn.updatePilotInfo(parsedData.drones);
 	const data = {

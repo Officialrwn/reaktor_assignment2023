@@ -1,15 +1,11 @@
 const pool = require('../configs/db.config.js').pool;
-const fs = require('fs');
-const path = require('path');
+const sql = require('../utils/sql_utils.js');
 
-const create = async (pilotInfo) => {
+const create = async (pilots) => {
 	try {
-		// const sql = fs.readFileSync(path.join(__dirname, '../sql/db.create.sql')).toString();
-		const sql = "insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ? \
+		const query = "insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ? \
 		on duplicate key update distance = if(distance < values(distance), distance, values(distance))";
-		const values = [];
-		values.push(pilotInfo);
-		pool.query(sql, [values]);
+		pool.query(query, [pilots]);
 	} catch (err) {
 		console.error("Failed to insert into db\n", err);
 	}
@@ -17,8 +13,8 @@ const create = async (pilotInfo) => {
 
 const cleanUp = async () => {
 	try {
-		const sql = fs.readFileSync(path.join(__dirname, '../sql/db.cleanup.sql')).toString();
-		pool.query(sql);
+		const query = sql.get('db.cleanup.sql');
+		pool.query(query);
 	} catch (err) {
 		console.error("Failed to cleanup db\n", err);
 	}
@@ -26,8 +22,8 @@ const cleanUp = async () => {
 
 const getData = async () => {
 	try {
-		const sql = fs.readFileSync(path.join(__dirname, '../sql/db.getdata.sql')).toString();
-		const res = await pool.query(sql);
+		const query = sql.get('db.getdata.sql');
+		const res = await pool.query(query);
 		return (res[0]);
 	} catch (err) {
 		console.error("Failed to get data from db\n", err);

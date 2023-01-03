@@ -13,7 +13,7 @@ const getDistanceToNest = (x, y) => {
 const updatePilotInfo = async (drones) => {
 	try {
 		const forbiddenRange = process.env.FORBIDDEN_RANGE;
-		const allPilots = await Promise.all(drones.map(async (drone) => {
+		const pilots = await Promise.all(drones.map(async (drone) => {
 			if (drone.dist <= forbiddenRange) {
 				const url = baseUrl + "/pilots/" + drone.serialNumber;
 				const res = await axios.get(url);
@@ -25,8 +25,8 @@ const updatePilotInfo = async (drones) => {
 				}
 			}
 		}))
-		const pilots = allPilots.filter(pilot => pilot !== undefined);
-		pilots.map(pilot => db.create(Object.values(pilot)));
+		pilots
+			.filter(pilot => pilot !== undefined)
 	} catch (err) {
 		console.error("Update pilot info failed\n", err);
 	}
@@ -62,7 +62,6 @@ const parseXml = (res) => {
 const fetchData = async () => {
 	const res = await axios.get(baseUrl + "/drones");
 	if (res.status === 200) {
-		
 		const parsedData = await parseXml(res.data);
 		updatePilotInfo(parsedData.drones);
 		const data = {

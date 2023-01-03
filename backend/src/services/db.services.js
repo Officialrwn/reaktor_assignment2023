@@ -1,7 +1,10 @@
 const pool = require('../configs/db.config.js').pool;
+const fs = require('fs');
+const path = require('path');
 
 const create = async (pilotInfo) => {
 	try {
+		// const sql = fs.readFileSync(path.join(__dirname, '../sql/db.create.sql')).toString();
 		const sql = "insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ? \
 		on duplicate key update distance = if(distance < values(distance), distance, values(distance))";
 		const values = [];
@@ -14,7 +17,7 @@ const create = async (pilotInfo) => {
 
 const cleanUp = async () => {
 	try {
-		const sql = "delete from pilots where date < (NOW() - interval 10 minute)"
+		const sql = fs.readFileSync(path.join(__dirname, '../sql/db.cleanup.sql')).toString();
 		pool.query(sql);
 	} catch (err) {
 		console.error("Failed to cleanup db\n", err);
@@ -23,7 +26,7 @@ const cleanUp = async () => {
 
 const getData = async () => {
 	try {
-		const sql = "select * from pilots where date > (NOW() - interval 10 minute)"
+		const sql = fs.readFileSync(path.join(__dirname, '../sql/db.getdata.sql')).toString();
 		const res = await pool.query(sql);
 		return (res[0]);
 	} catch (err) {

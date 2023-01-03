@@ -1,12 +1,13 @@
-const pool = require('./db.config.js').pool;
-
-/* Create table if table does not exist */
+const pool = require('../configs/db.config.js').pool;
+const fs = require('fs');
+const path = require('path');
 
 const init = () => {
-	console.log("Table created!");
+	const sql = fs.readFileSync(path.join(__dirname, '../sql/db.init.sql')).toString();
+	pool.query(sql);
+	console.log("db initiated!");
 }
 
 module.exports = {
 	init
 }
-

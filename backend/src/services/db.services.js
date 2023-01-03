@@ -1,10 +1,4 @@
-const mysql = require('mysql2/promise');
-const config = require('../config.db');
-
-const pool = mysql.createPool({
-	...config.db,
-	connectionLimit: 100,
-});
+const pool = require('../configs/db.config.js').pool;
 
 const create = async (pilotInfo) => {
 	try {

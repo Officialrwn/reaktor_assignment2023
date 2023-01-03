@@ -1,21 +1,22 @@
 const axios = require('axios');
 const parser = require('xml2js');
-const db = require('../services/db.js');
+const db = require('../services/db.services.js');
+require('dotenv').config();
 
-const dronesApi = "https://assignments.reaktor.com/birdnest/drones";
-const pilotApi = "https://assignments.reaktor.com/birdnest/pilots/";
-const forbiddenRange = 100000;
-const originPos = 250000;
+const baseUrl = process.env.BASE_URL;
 
 const getDistanceToNest = (x, y) => {
+	const originPos = process.env.ORIGIN_POSITION;
 	return Math.sqrt(Math.pow((x - originPos), 2) + Math.pow((y - originPos), 2));
 }
 
 const updatePilotInfo = async (drones) => {
 	try {
+		const forbiddenRange = process.env.FORBIDDEN_RANGE;
 		const allPilots = await Promise.all(drones.map(async (drone) => {
 			if (drone.dist <= forbiddenRange) {
-				const res = await axios.get(pilotApi+drone.serialNumber);
+				const url = baseUrl + "/pilots/" + drone.serialNumber;
+				const res = await axios.get(url);
 				if (res.status === 200) {
 					const {createdDt: _, ...pilot} = res.data;
 					return { ...pilot, distance: drone.dist };
@@ -59,7 +60,7 @@ const parseXml = (res) => {
 }
 
 const fetchData = async () => {
-	const res = await axios.get(dronesApi);
+	const res = await axios.get(baseUrl + "/drones");
 	if (res.status === 200) {
 		
 		const parsedData = await parseXml(res.data);

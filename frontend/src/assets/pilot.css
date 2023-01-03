@@ -1,5 +1,14 @@
-.Pilot {
-	text-align: center;
+.pilot {
 	display: flex;
-	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	margin: 10px 0px 10px 0px;
+}
+
+.prop {
+	display: flexbox;
+	margin: 0px 5px 0px 5px;
+	border: solid;
+	border-width: 1px;
+	text-align: center;
 }

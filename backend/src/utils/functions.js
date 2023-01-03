@@ -27,6 +27,7 @@ const updatePilotInfo = async (drones) => {
 		}))
 		pilots
 			.filter(pilot => pilot !== undefined)
+			.map(pilot => db.create([Object.values(pilot)]));
 	} catch (err) {
 		console.error("Update pilot info failed\n", err);
 	}
@@ -64,8 +65,11 @@ const fetchData = async () => {
 	if (res.status === 200) {
 		const parsedData = await parseXml(res.data);
 		updatePilotInfo(parsedData.drones);
+		const pilots = await db.getData();
+		const closestPilot = pilots.reduce((a, b) => a.distance < b.distance ? a : b);
 		const data = {
-			pilots: await db.getData(),
+			pilots: pilots,
+			closestPilot: closestPilot,
 			deviceInfo: parsedData.deviceInformation
 		};
 		return data;

@@ -3,6 +3,7 @@ const sql = require('../utils/sql_utils.js');
 
 const create = async (pilots) => {
 	try {
+		// const query = sql.get('db.create.sql');
 		const query = "insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ? \
 		on duplicate key update distance = if(distance < values(distance), distance, values(distance))";
 		pool.query(query, [pilots]);

@@ -1,12 +1,10 @@
 const pool = require('../configs/db.config.js').pool;
-const sql = require('../utils/sql_utils.js');
+const sql = require('../utils/sql.js');
 
 const create = async (pilots) => {
 	try {
-		// const query = sql.get('db.create.sql');
-		const query = "insert into pilots (pilotid, firstname, lastname, phone, email, distance) values ? \
-		on duplicate key update distance = if(distance < values(distance), distance, values(distance))";
-		pool.query(query, [pilots]);
+		const query = sql.get('db.create.sql');
+		await pool.query(query, [pilots]);
 	} catch (err) {
 		console.error("Failed to insert into db\n", err);
 	}
@@ -15,7 +13,7 @@ const create = async (pilots) => {
 const cleanUp = async () => {
 	try {
 		const query = sql.get('db.cleanup.sql');
-		pool.query(query);
+		await pool.query(query);
 	} catch (err) {
 		console.error("Failed to cleanup db\n", err);
 	}

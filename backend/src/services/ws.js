@@ -5,7 +5,7 @@ const messageResponse = "messageResponse";
 
 const socketIO = require('socket.io')(server.http, {
 	cors: {
-		origin: "http://localhost:3000"
+		origin: "http://localhost:5173"
 	}
 });
 

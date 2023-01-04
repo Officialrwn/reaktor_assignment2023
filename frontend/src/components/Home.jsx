@@ -5,12 +5,12 @@ const socket = socketIO.connect('http://localhost:3001');
 
 const Home = () => {
 	const [data, setData] = useState([]);
-	// useEffect(() => {
-	// 	socket.on('messageResponse', (data) => {
-	// 		setData(data);
-	// 		console.log("socket data: ", data);
-	// 	})
-	// }, []);
+	useEffect(() => {
+		socket.on('messageResponse', (data) => {
+			setData(data);
+		})
+	}, []);
+	console.log("socket data: ", data);
 	return (
 		<div>
 			<p>test</p>

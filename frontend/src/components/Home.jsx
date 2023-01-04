@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import socketIO from 'socket.io-client';
+import Navbar from './Navbar.jsx'
+import Container from './Container.jsx'
 
 const socket = socketIO.connect('http://localhost:3001');
 
@@ -13,7 +15,9 @@ const Home = () => {
 	console.log("socket data: ", data);
 	return (
 		<div>
-			<p>test</p>
+			<Navbar/>
+			<Container/>
+			<Container/>
 		</div>
 	);
 }

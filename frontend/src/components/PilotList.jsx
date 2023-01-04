@@ -1,4 +1,4 @@
-import Pilot from './Pilot.js'
+import Pilot from './Pilot.jsx'
 
 const PilotList = ({pilots}) => {
 	return (

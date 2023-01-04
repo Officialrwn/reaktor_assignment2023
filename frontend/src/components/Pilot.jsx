@@ -1,4 +1,4 @@
-import '../assets/pilot.css' 
+// import '../assets/pilot.css' 
 
 const Pilot = ({pilot}) => {
 	const date = new Date(pilot?.date).toLocaleTimeString("en-US", {
@@ -9,10 +9,10 @@ const Pilot = ({pilot}) => {
 	const dist = pilot?.distance / 1000;
 	return (
 		<div className="pilot">
-			<p className="prop">Leo Tran</p>
-			<p className="prop">leo@example.net</p>
-			<p className="prop">+3512321313213</p>
-			<p className="prop">51.500 m</p>
+			<p>Leo Tran</p>
+			<p>leo@example.net</p>
+			<p>+3512321313213</p>
+			<p>51.500 m</p>
 			{/* <p className="prop">{pilot.firstname} {pilot.lastname}</p>
 			<p className="prop">{pilot.email}</p>
 			<p className="prop">{pilot.phone}</p>

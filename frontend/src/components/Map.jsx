@@ -1,3 +1,7 @@
+import Chart from './Chart.jsx'
+import Line from './Line.jsx'
+import Scanner from './Scanner.jsx'
+
 const Map = ({data}) => {
 	const dist = data?.closestPilot?.distance/1000;
 	return (
@@ -7,12 +11,16 @@ const Map = ({data}) => {
 					<p className="inline-flex">RADAR MAP</p>
 					<p className="inline-flex absolute right-5 font-extrabold text-red-700">Closest confirmed distance: {dist ? dist.toFixed(2) : "0.00"}m</p>
 				</div>
-				<div className="text-white flex w-full h-full bg-black justify-center items-center">
-					<div className="text-green-800 text-4xl font-medium">Map placement</div>
+				<div className="text-white flex w-full h-full bg-black justify-center items-center relative">
+					<Chart className="z-10 inline-flex relative"/>
+					<hr className="absolute right-[281px] bg-lightgreen inline-flex h-[2px] w-[223px]" id="line"/>
+					<div className="absolute border-2 rounded-full border-lightgreen w-[450px] h-[450px]"></div>
+					<hr className="absolute bg-lightgreen h-[470px] w-[2px]"/>
+					<hr className="absolute bg-lightgreen h-[470px] w-[2px] rotate-90"/>
+					<Line/>
 				</div>
 			</div>
 		</div>
-	)
-}
-
-export default Map
+		)
+	}
+	export default Map

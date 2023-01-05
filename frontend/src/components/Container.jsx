@@ -14,13 +14,7 @@ const Container = ({data}) => {
 						List of NDZ Violations past 10 min
 				</div>
 				<div className="w-full h-full overflow-auto shadow bg-gray-300" id="journal-scroll">
-					<table className="w-full">
-						<tbody className={!pilots ? "flex justify-center items-center" : ""}>
-							{ pilots?.map(pilot => {
-								{ return <Pilot key={pilot.pilotid} pilot={pilot}/> }})
-								?? <Loading/> }
-						</tbody>
-					</table>
+					{ pilots ? <Pilot pilots={pilots}/> : <Loading/> }
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ const sql = require('../utils/sql.js');
 const create = async (pilots) => {
 	try {
 		const query = sql.get('db.create.sql');
+		// console.log(pilots);
 		await pool.query(query, [pilots]);
 	} catch (err) {
 		console.error("Failed to insert into db\n", err);

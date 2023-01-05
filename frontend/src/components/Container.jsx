@@ -2,6 +2,11 @@ import Pilot from './Pilot.jsx'
 import Loading from './Loading.jsx'
 
 const Container = ({data}) => {
+	// const closest = data?.closestPilot;
+	// const pilots = data?.pilots?.filter(pilot => pilot.pilotid !== closest.pilotid);
+	// console.log("closest", data?.closestPilot?.firstname);
+	// console.log(pilots);
+	const pilots = data?.pilots;
 	return (
 		<div className="inline-flex h-screen w-1/3">
 			<div className="w-full h-full flex flex-col">
@@ -10,8 +15,8 @@ const Container = ({data}) => {
 				</div>
 				<div className="w-full h-full overflow-auto shadow bg-gray-300" id="journal-scroll">
 					<table className="w-full">
-						<tbody className={!data?.pilots ? "flex justify-center items-center" : ""}>
-							{ data?.pilots?.map(pilot => {
+						<tbody className={!pilots ? "flex justify-center items-center" : ""}>
+							{ pilots?.map(pilot => {
 								{ return <Pilot key={pilot.pilotid} pilot={pilot}/> }})
 								?? <Loading/> }
 						</tbody>

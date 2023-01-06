@@ -1,5 +1,5 @@
 const server = require('./server.js');
-const fn = require('../utils/functions.js');
+const droneApi = require('../controllers/droneApiService.js');
 
 const messageResponse = "messageResponse";
 
@@ -12,7 +12,7 @@ const socketIO = require('socket.io')(server.http, {
 const init = () => {
 	socketIO.on('connection', async (socket) => {
 		console.log(`New clientid: {${socket.id}} connected`);
-		const data = await fn.fetchData();
+		const data = await droneApi.init();
 		socketIO.emit(messageResponse, data);
 	});
 }

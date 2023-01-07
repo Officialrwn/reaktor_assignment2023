@@ -12,12 +12,14 @@ const Map = ({data}) => {
 					<p className="inline-flex absolute right-5 font-extrabold text-red-700">Closest confirmed distance: {dist ? dist.toFixed(2) : "0.00"}m</p>
 				</div>
 				<div className="text-white flex w-full h-full bg-black justify-center items-center relative">
-					<Chart className="z-10 inline-flex relative"/>
-					<hr className="absolute right-[281px] bg-lightgreen inline-flex h-[2px] w-[223px]" id="line"/>
-					<div className="absolute border-2 rounded-full border-lightgreen w-[450px] h-[450px]"></div>
-					<hr className="absolute bg-lightgreen h-[470px] w-[2px]"/>
-					<hr className="absolute bg-lightgreen h-[470px] w-[2px] rotate-90"/>
-					<Line/>
+					<div className="relative bg-black items-center inline-flex justify-center">
+						<Scanner/>
+						<Chart className="absolute inline-flex"/>
+						<div className="absolute inline-flex border-2 rounded-full border-lightgreen w-[450px] h-[450px]"></div>
+						<hr className="absolute inline-flex bg-lightgreen h-[470px] w-[2px]"/>
+						<hr className="absolute inline-flex bg-lightgreen h-[470px] w-[2px] rotate-90"/>
+						<Line/>
+					</div>
 				</div>
 			</div>
 		</div>

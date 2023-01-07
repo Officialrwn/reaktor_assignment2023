@@ -1,5 +1,4 @@
 const db = require('./db.services.js');
-const fn = require('../utils/functions.js');
 const droneApi = require('../controllers/droneApiService.js');
 const ws = require('./ws.js');
 

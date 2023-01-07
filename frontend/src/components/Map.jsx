@@ -13,6 +13,7 @@ const Map = ({data}) => {
 				</div>
 				<div className="text-white flex w-full h-full bg-black justify-center items-center relative">
 					<div className="relative bg-black items-center inline-flex justify-center">
+						<p className="absolute text-green-800 font-extrabold top-0 right-0">R = 100m</p>
 						<Scanner/>
 						<Chart className="absolute inline-flex"/>
 						<div className="absolute inline-flex border-2 rounded-full border-lightgreen w-[450px] h-[450px]"></div>

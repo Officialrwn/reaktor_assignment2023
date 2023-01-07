@@ -1,8 +1,4 @@
-const data = [
-  { battery: 0.7, design: 1, useful: 0.9, speed: 0.67, weight: 0.8 },
-  { battery: 0.6, design: 0.9, useful: 0.8, speed: 0.7, weight: 0.6 }
-];
-const chartSize = 450;
+const chartSize = 500;
 const numberOfScales = 10;
 const scale = value => (
   <circle

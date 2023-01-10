@@ -10,7 +10,8 @@ const sqlQuery = (sql) => {
 const create = async (pilots) => {
 	try {
 		const query = sqlQuery('db.create.sql');
-		await pool.query(query, [pilots]);
+		const res = await pool.query(query, pilots);
+		return res;
 	} catch (err) {
 		console.error("Failed to insert into db\n", err);
 	}
@@ -19,7 +20,8 @@ const create = async (pilots) => {
 const cleanUp = async () => {
 	try {
 		const query = sqlQuery('db.cleanup.sql');
-		await pool.query(query);
+		const res = await pool.query(query);
+		return res;
 	} catch (err) {
 		console.error("Failed to cleanup db\n", err);
 	}
@@ -29,7 +31,7 @@ const getData = async () => {
 	try {
 		const query = sqlQuery('db.getdata.sql');
 		const res = await pool.query(query);
-		return (res[0]);
+		return res;
 	} catch (err) {
 		console.error("Failed to get data from db\n", err);
 	}

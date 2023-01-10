@@ -4,10 +4,15 @@ const axios = require('axios');
 require('dotenv').config();
 
 const baseUrl = process.env.BASE_URL;
+const originPos = parseInt(process.env.ORIGIN_POSITION) || 250000;
+const forbiddenRange = parseInt(process.env.FORBIDDEN_RANGE) || 100000;
 
 const getDistanceToNest = (x, y) => {
-	const originPos = process.env.ORIGIN_POSITION || 250000;
 	return Math.sqrt(Math.pow((x - originPos), 2) + Math.pow((y - originPos), 2));
+}
+
+const getRadarPos = (pos) => {
+	return ((Math.round(pos) - originPos + forbiddenRange) / forbiddenRange * originPos) / 1000;
 }
 
 const parseData = (parsedData) => {
@@ -31,14 +36,15 @@ const parseData = (parsedData) => {
 
 const getPilotInfo = async (drones) => {
 	try {
-		const forbiddenRange = process.env.FORBIDDEN_RANGE;
 		const pilots = await Promise.all(drones.map(async (drone) => {
 			if (drone.dist <= forbiddenRange) {
 				const url = baseUrl + "/pilots/" + drone.serialNumber;
 				const res = await axios.get(url);
 				if (res.status === 200) {
 					const {createdDt: _, ...pilot} = res.data;
-					return { ...pilot, distance: drone.dist };
+					const posX = getRadarPos(drone.posX);
+					const posY = getRadarPos(drone.posY);
+					return { ...pilot, distance: drone.dist / 1000, posx: posX, posy: posY };
 				} else {
 					console.log(`No pilot info, status code: ${res.status}\n`);
 				}
@@ -54,7 +60,7 @@ const updatePilotInfo = (pilots) => {
 	try {
 		pilots
 			.filter(pilot => pilot !== undefined)
-			.map(async (pilot) => await db.create([Object.values(pilot)]));
+			.map(async (pilot) => await db.create(Object.values(pilot)));
 	} catch (err) {
 		console.error("Failed to update pilot info\n", err);
 	}
@@ -75,16 +81,17 @@ const init = async () => {
 	const pilots = await getPilotInfo(data.drones);
 	updatePilotInfo(pilots);
 	const res = await db.getData();
-	let closestPilot;
-		if (res.length) {
-			closestPilot = res?.reduce((a, b) => a.distance < b.distance ? a : b);
-		}
+	if (res.rowCount) {
+		const closestPilot = res.rows.reduce((a, b) => a.distance < b.distance ? a : b);
 		const obj = {
-			pilots: res,
+			pilots: res.rows,
 			closestPilot: closestPilot,
 			deviceInfo: data.deviceInformation
 		};
 		return obj;
+	} else {
+		console.log("0 rows queried");
+	}
 }
 
 module.exports = {

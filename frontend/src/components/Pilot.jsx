@@ -9,7 +9,7 @@ const Pilot = ({pilots}) => {
 					const date = new Date(pilot?.date).toLocaleTimeString(
 						navigator.language, {hour: '2-digit', minute:'2-digit'
 					});
-					const dist = pilot?.distance / 1000;
+					const dist = pilot?.distance;
 					return (
 						<React.Fragment key={pilot.pilotid}>
 							<tr className="relative transform scale-100 w-1 text-xs py-1 border-b-2 border-l border-gray-400 cursor-default bg-blue-400 bg-opacity-25">

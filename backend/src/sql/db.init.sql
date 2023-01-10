@@ -1,8 +1,11 @@
-CREATE TABLE IF NOT EXISTS `pilots`
-(`pilotid` VARCHAR(255) PRIMARY KEY NOT NULL,
-`firstname` VARCHAR(255) DEFAULT NULL,
-`lastname` VARCHAR(255) DEFAULT NULL,
-`phone` VARCHAR(255) DEFAULT NULL,
-`date` DATETIME DEFAULT CURRENT_TIMESTAMP(),
-`email` VARCHAR(255) DEFAULT NULL,
-`distance` INT DEFAULT 100)
+CREATE TABLE IF NOT EXISTS pilots (
+    pilotid varchar primary key not null,
+    firstname varchar default null,
+    lastname varchar default null,
+    phone varchar default null,
+    date  timestamp with time zone default current_timestamp,
+    email varchar default null,
+    distance numeric default 100,
+		posx numeric default 500,
+		posy numeric default 500
+);

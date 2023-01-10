@@ -67,30 +67,34 @@ const updatePilotInfo = (pilots) => {
 }
 
 const getDeviceInfo = async () => {
-	const res = await axios.get(baseUrl + "/drones");
-	if (res.status === 200) {
-		const data = await parser.parseXml(res.data);
-		return parseData(data);
-	} else {
-		console.error(`Failed to fetch drones from api, status code: ${res.status}`);
+	try { 
+		const res = await axios.get(baseUrl + "/drones");
+		if (res.status === 200) {
+			const data = await parser.parseXml(res.data);
+			return parseData(data);
+		} else {
+			console.error(`Failed to fetch drones from api, status code: ${res.status}`);
+		}
+	} catch(err) {
+		console.error("Error fetching device info");
 	}
 }
 
 const init = async () => {
 	const data = await getDeviceInfo();
-	const pilots = await getPilotInfo(data.drones);
-	updatePilotInfo(pilots);
-	const res = await db.getData();
-	if (res.rowCount) {
-		const closestPilot = res.rows.reduce((a, b) => a.distance < b.distance ? a : b);
-		const obj = {
-			pilots: res.rows,
-			closestPilot: closestPilot,
-			deviceInfo: data.deviceInformation
-		};
-		return obj;
-	} else {
-		console.log("0 rows queried");
+	if (data) {
+		const pilots = await getPilotInfo(data?.drones);
+		updatePilotInfo(pilots);
+		const res = await db.getData();
+		if (res.rows) {
+			const obj = {
+				pilots: res.rows,
+				deviceInfo: data.deviceInformation
+			};
+			return obj;
+		} else {
+			console.log("0 rows queried");
+		}
 	}
 }
 

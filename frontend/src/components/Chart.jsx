@@ -14,7 +14,7 @@ const scale = value => (
 
 const middleOfChart = (chartSize / 2).toFixed(4);
 
-const RadarChart = props => {
+const RadarChart = (props) => {
   const groups = [];
   const scales = [];
   for (let i = numberOfScales; i > 0; i--) {

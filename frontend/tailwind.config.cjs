@@ -1,10 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	mode: 'jit',
-	purge: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-	],
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -13,7 +9,8 @@ module.exports = {
     extend: {
 			colors: {
 				lightgreen: "#AFFF8D"
-			}
+			},
+			visibility: ["group-hover"],
 		},
   },
   plugins: [],

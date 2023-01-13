@@ -6,11 +6,17 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+		fontFamily: {
+			'poppins': ['Poppins']
+		},
     extend: {
 			colors: {
 				lightgreen: "#AFFF8D"
 			},
 			visibility: ["group-hover"],
+			fontFamily: {
+				'poppins': ['Poppins']
+			}
 		},
   },
   plugins: [],

@@ -10,7 +10,8 @@ const Home = () => {
 	const [data, setData] = useState([]);
 	useEffect(() => {
 		socket.on('messageResponse', (data) => {
-			setData(data);
+			if (data)
+				setData(data);
 		})
 	}, []);
 	console.log("socket data: ", data);

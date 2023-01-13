@@ -6,7 +6,7 @@ const messageResponse = "messageResponse";
 
 const socketIO = require('socket.io')(server.http, {
 	cors: {
-		origin: "https://birdnest-ndz-reaktor.herokuapp.com/",
+		origin: "https://birdnest-ndz-reaktor.onrender.com/",
 		methods: ["GET"],
 	}
 });

@@ -4,7 +4,7 @@ import Navbar from './Navbar.jsx'
 import Container from './Container.jsx'
 import Map from './Map.jsx'
 
-const socket = socketIO.connect("https://birdnest-ndz-reaktor.herokuapp.com/");
+const socket = socketIO.connect("https://backend-birdnest.onrender.com");
 
 const Home = () => {
 	const [data, setData] = useState([]);

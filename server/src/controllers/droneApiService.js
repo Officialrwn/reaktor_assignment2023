@@ -1,7 +1,7 @@
 const parser = require('../utils/parsexml.js');
 const db = require('../services/db.services.js');
 const axios = require('axios');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 
 const baseUrl = process.env.BASE_URL || "https://assignments.reaktor.com/birdnest";
 const originPos = parseInt(process.env.ORIGIN_POSITION) || 250000;

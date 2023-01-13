@@ -1,6 +1,6 @@
 const server = require('./server.js');
 const droneApi = require('../controllers/droneApiService.js');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 
 const messageResponse = "messageResponse";
 

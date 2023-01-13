@@ -3,7 +3,7 @@ const db = require('../services/db.services.js');
 const axios = require('axios');
 require('dotenv').config({ path: '../.env' });
 
-const baseUrl = process.env.BASE_URL;
+const baseUrl = process.env.BASE_URL || "https://assignments.reaktor.com/birdnest";
 const originPos = parseInt(process.env.ORIGIN_POSITION) || 250000;
 const forbiddenRange = parseInt(process.env.FORBIDDEN_RANGE) || 100000;
 

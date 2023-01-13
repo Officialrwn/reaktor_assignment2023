@@ -6,7 +6,7 @@ const messageResponse = "messageResponse";
 
 const socketIO = require('socket.io')(server.http, {
 	cors: {
-		origin: process.env.HEROKU || "http://localhost:5173",
+		origin: "https://birdnest-ndz-reaktor.herokuapp.com/",
 		methods: ["GET"],
 	}
 });

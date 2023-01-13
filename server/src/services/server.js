@@ -6,7 +6,7 @@ const path = require('path');
 require('dotenv').config({ path: '../.env' });
 
 app.use(cors({
-	origin: process.env.HEROKU || "http://localhost:5173"
+	origin: "https://birdnest-ndz-reaktor.herokuapp.com/"
 }));
 
 // if (process.env.NODE_ENV === 'production') {

@@ -17,7 +17,7 @@ const Navbar = ({data}) => {
 				<img className="pt-1 ml-4 max-h-5" src={feather} alt={feather}/>
 				<p className="ml-2 font-extrabold">Monadikuikka NDZ</p>
 			</div>
-			<div className="inline-flex w-1/3 ml-auto items-center text-sm justify-end">
+			<div className="inline-flex w-1/3 ml-auto items-center text-sm justify-end" id="icons">
 				<div className="inline-flex items-center font-extrabold">
 					<img className="max-h-3" src={up} alt={up}/>
 					<img className="max-h-4 mr-1.5" src={server} alt={server}/>

@@ -4,7 +4,7 @@ import Loading from './Loading.jsx'
 const Container = ({data}) => {
 	const pilots = data?.pilots;
 	return (
-		<div className="inline-flex h-screen w-1/3">
+		<div className="inline-flex h-screen w-1/3" id="list">
 			<div className="w-full h-full flex flex-col">
 				<div className="bg-[#3A435E] text-sm text-[#6C6F7F] font-bold pl-4 py-2 border-[#6C6F7F] border-x-2 border-y-2">
 						List of NDZ Violations past 10 min

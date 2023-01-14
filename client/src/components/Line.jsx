@@ -5,7 +5,7 @@ const Line = () => {
 	return (
 		<React.Fragment>
 			{ values && values?.map((value, index) => {
-				const line = "absolute bg-lightgreen h-[500px] w-[0.7px]";
+				const line = "absolute bg-[#6D9DC5] h-[500px] w-[0.7px]";
 				return <hr key={index} style={{rotate: `${value}deg`}} className={line}/>
 			})}
 		</React.Fragment>

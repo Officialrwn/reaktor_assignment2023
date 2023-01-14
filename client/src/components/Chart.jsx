@@ -7,7 +7,7 @@ const scale = value => (
     cy={0}
     r={((value / numberOfScales) * chartSize) / 2}
     fill="#313E50"
-    stroke="#AFFF8D"
+    stroke="#6D9DC5"
     strokeWidth="0.4"
   />
 );

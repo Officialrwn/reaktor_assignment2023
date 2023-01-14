@@ -4,7 +4,8 @@ import Navbar from './Navbar.jsx'
 import Container from './Container.jsx'
 import Map from './Map.jsx'
 
-const socket = socketIO.connect("https://backend-birdnest.onrender.com");
+const url = "https://backend-birdnest.onrender.com";
+const socket = socketIO.connect(url);
 
 const Home = () => {
 	const [data, setData] = useState([]);

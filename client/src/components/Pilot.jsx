@@ -12,7 +12,7 @@ const Pilot = ({pilots}) => {
 					const dist = parseFloat(pilot?.distance).toFixed(2);
 					return (
 						<React.Fragment key={pilot.pilotid}>
-							<tr className="bg-[#3A435E] border-[#6C6F7F] relative transform scale-100 w-1 text-xs py-1 border-b-2 cursor-default">
+							<tr className="bg-[#3A435E] border-[#6C6F7F] relative transform scale-100 w-1 text-xs py-1 border-b-2 cursor-default hover:bg-[#6D9DC5]">
 								<td className="px-2 whitespace-no-wrap w-20">
 									<div className="font-semibold text-[#6C6F7F]">Today</div>
 									<div className="text-[#455561] font-semibold text-xs">{date}</div>

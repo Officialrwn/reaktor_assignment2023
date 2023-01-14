@@ -12,18 +12,18 @@ const Pilot = ({pilots}) => {
 					const dist = parseFloat(pilot?.distance).toFixed(2);
 					return (
 						<React.Fragment key={pilot.pilotid}>
-							<tr className="relative transform scale-100 w-1 text-xs py-1 border-b-2 border-l border-gray-400 cursor-default bg-blue-400 bg-opacity-25">
+							<tr className="bg-[#3A435E] border-[#6C6F7F] relative transform scale-100 w-1 text-xs py-1 border-b-2 cursor-default">
 								<td className="px-2 whitespace-no-wrap w-20">
-									<div className="font-semibold text-gray-400">Today</div>
-									<div className="text-gray-800 font-semibold text-xs">{date}</div>
+									<div className="font-semibold text-[#6C6F7F]">Today</div>
+									<div className="text-[#455561] font-semibold text-xs">{date}</div>
 								</td>
 								<td className="px-2 py-2 whitespace-no-wrap">
-									<div className=" text-gray-500 font-extrabold">{pilot.firstname} {pilot.lastname}</div>
-									<div className="text-gray-800 font-semibold">{pilot.email}</div>
+									<div className=" text-[#6C6F7F] font-extrabold">{pilot.firstname} {pilot.lastname}</div>
+									<div className="text-[#455561] font-semibold">{pilot.email}</div>
 								</td>
 								<td className="px-2 py-2 whitespace-no-wrap">
-									<div className="pr-5 text-right text-red-700 font-extrabold">{dist}m</div>
-									<div className="pr-5 text-right font-semibold text-gray-800">{pilot.phone}</div>
+									<div className="pr-5 text-right text-[#6C6F7F] font-extrabold">{dist}m</div>
+									<div className="pr-5 text-right font-semibold text-[#455561]">{pilot.phone}</div>
 								</td>
 							</tr>
 						</React.Fragment>

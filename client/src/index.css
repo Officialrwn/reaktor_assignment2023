@@ -66,3 +66,15 @@
     opacity: 0;
   }
 }
+
+@media screen and (max-width: 800px) {
+  .sweep {
+    display: none;
+  }
+  .dot {
+    display: none;
+  }
+  .radar {
+    display: none;
+  }
+}

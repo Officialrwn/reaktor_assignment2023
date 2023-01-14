@@ -7,9 +7,8 @@ import RadarBorders from './RadarBorders.jsx'
 const Radar = ({data}) => {
 	const pilot = { posx: 340, posy: 250 };
 	return (
-		<div className="text-white flex w-full h-full bg-black justify-center items-center relative">
-			<div className="relative bg-black items-center inline-flex justify-center">
-				<p className="absolute text-green-800 font-extrabold top-0 right-0">R = 100m</p>
+		<div className="border-x-2 border-y-2 border-[#6C6F7F] text-[#6A8D92] flex w-full h-full bg-[#313E50] justify-center items-center relative">
+			<div className="relative bg-[#313E50] items-center inline-flex justify-center">
 				{ data?.pilots && data.pilots.map(pilot => {
 				return <Drone key={pilot.pilotid} pilot={pilot}/> })}
 				<Scanner/>

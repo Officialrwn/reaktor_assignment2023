@@ -1,3 +1,4 @@
+import React from 'react'
 import MapHeader from './MapHeader.jsx'
 import Radar from './Radar.jsx'
 

@@ -1,6 +1,6 @@
 const MapHeader = ({data}) => {
 	let dist = 0.00;
-	if (data && data.pilots.length > 0) {
+	if (data && data?.pilots?.length > 0) {
 		const closestPilot = data.pilots.reduce((a, b) => parseFloat(a.distance) < parseFloat(b.distance) ? a : b);
 		dist = parseFloat(closestPilot?.distance).toFixed(2);
 	}

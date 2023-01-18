@@ -15,7 +15,6 @@ const Home = () => {
 				setData(data);
 		})
 	}, []);
-	console.log("socket data: ", data);
 	return (
 		<div>
 			<Navbar data={data}/>

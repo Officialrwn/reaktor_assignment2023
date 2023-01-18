@@ -10,7 +10,6 @@ const init = () => {
 		const data = await droneApi.init();
 		updateIntervalMs = data?.deviceInfo.updateIntervalMs[0];
 		ws.socketIO.emit(ws.messageResponse, data);
-		console.log(data);
 	}, updateIntervalMs ?? 2 * 1000)
 
 	setInterval(async () => {
